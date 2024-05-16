@@ -1,0 +1,52 @@
+version: 0.2
+
+env:
+  variables:
+    S3_BUCKET: "soufiane-test"
+    FREE_SWITCH_DIR: "/var/freeswitch"
+    DEB_DIR: "/opt/freeswitch/debs"
+    REPO_DIR: "/var/repo"
+    DIST: "jammy"
+    COMPONENT: "main"
+
+phases:
+  install:
+    runtime-versions:
+      docker: 19
+    commands:
+      - apt-get update
+      - apt-get install -y build-essential git devscripts s3cmd docker.io
+
+  build:
+    commands:
+      - ./build-dep.sh
+
+  post_build:
+    commands:
+      # Sync repository structure with new deb packages
+      - mkdir -p $REPO_DIR/dists/$DIST/$COMPONENT/binary-amd64
+      - cd $DEB_DIR
+      - for deb in *.deb; do
+          first_letter=$(echo ${deb:0:1} | tr '[:upper:]' '[:lower:]');
+          mkdir -p $REPO_DIR/pool/$COMPONENT/$first_letter;
+          cp $deb $REPO_DIR/pool/$COMPONENT/$first_letter/;
+        done
+
+      # Generate Packages.gz
+      - cd $REPO_DIR
+      - apt-ftparchive packages pool/$COMPONENT > dists/$DIST/$COMPONENT/binary-amd64/Packages
+      - gzip -k dists/$DIST/$COMPONENT/binary-amd64/Packages
+
+      # Sync the repository with S3
+      - s3cmd sync $REPO_DIR s3://$S3_BUCKET/repo --acl-public
+
+      # Test the package installation in a Docker container
+      - docker run --rm -v $REPO_DIR:/repo ubuntu:22.04 /bin/bash -c "
+        echo 'deb [trusted=yes] file:///repo jammy main' > /etc/apt/sources.list.d/localrepo.list;
+        apt-get update;
+        apt-get install -y $(ls $DEB_DIR | sed 's/_.*//')
+        "
+
+artifacts:
+  files:
+    - '**/*'
