@@ -11,8 +11,6 @@ env:
 
 phases:
   install:
-    runtime-versions:
-      docker: 19
     commands:
       - apt-get update
       - apt-get install -y build-essential git devscripts s3cmd docker.io
