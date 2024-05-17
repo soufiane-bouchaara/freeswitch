@@ -25,12 +25,6 @@ phases:
       # Sync repository structure with new deb packages
       - mkdir -p $REPO_DIR/dists/$DIST/$COMPONENT/binary-amd64
       - cd $DEB_DIR
-      - for deb in *.deb; do
-          first_letter=$(echo ${deb:0:1} | tr '[:upper:]' '[:lower:]');
-          mkdir -p $REPO_DIR/pool/$COMPONENT/$first_letter;
-          cp $deb $REPO_DIR/pool/$COMPONENT/$first_letter/;
-        done
-
       # Generate Packages.gz
       - cd $REPO_DIR
       - apt-ftparchive packages pool/$COMPONENT > dists/$DIST/$COMPONENT/binary-amd64/Packages
