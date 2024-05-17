@@ -73,7 +73,6 @@ echo 'Building FreeSWITCH...'
 wget -c https://files.freeswitch.org/releases/freeswitch/freeswitch-1.10.11.-release.tar.gz -P /opt/freeswitch
 
 cd /opt/freeswitch/
-./bootstrap.sh -j
 ./configure --prefix=/usr/local/freeswitch --disable-libvpx
 cp /opt/freeswitch/Ziwo/modules.conf /opt/freeswitch/modules.conf
 make
