@@ -66,6 +66,7 @@ PACKAGE_RELEASE="42" cmake . -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX:P
 dpkg -i signalwire-client-*.deb
 cp signalwire-client-*.deb ../../debs
 echo 'Built signalwire-c'
+ldconfig
 
 # -------------------------- FreeSWITCH -------------------------- #
 
