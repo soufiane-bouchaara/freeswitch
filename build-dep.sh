@@ -142,4 +142,27 @@ echo 'Built FreeSWITCH!!'
 
 
 
+###REPO
+# Iterate over all .txt files in /tmp/toto
+for file in /opt/freeswitch/debs/*.deb; do
+  # Check if the file exists (in case there are no .txt files)
+  if [ -f "$file" ]; then
+    # Extract the first letter of the filename (excluding the path)
+    filename=$(basename "$file")
+    first_letter=${filename:0:1}
+    
+    # Create the target directory based on the first letter
+    target_dir="/var/repo/pool/main/$first_letter"
+    mkdir -p "$target_dir"
+    # Copy the .txt file into the target directory
+    cp "$file" "$target_dir/"
+    
+    echo "Copied $file to $target_dir/"
+  fi
+done
+
+echo "Done."
+
+
+
 
