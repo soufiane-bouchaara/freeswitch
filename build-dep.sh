@@ -7,7 +7,7 @@ apt-get install -y \
   autoconf automake cmake libtool libtool-bin build-essential make libssl-dev \
   libtiff-dev pkg-config uuid-dev libsqlite3-dev libcurl4-openssl-dev \
   libspeexdsp-dev libpcre3-dev libldns-dev libedit-dev yasm liblua5.2-dev lua5.2 \
-  libopus-dev libpq-dev portaudio19-dev libshout3-dev libmpg123-dev libmp3lame-dev libsndfile-dev
+  libopus-dev libpq-dev portaudio19-dev libshout3-dev libmpg123-dev libmp3lame-dev libsndfile-dev dpatch
 
 apt-get install -y \
   lsb-release debhelper libglib2.0-dev doxygen graphviz docbook-xsl xsltproc
@@ -44,6 +44,7 @@ echo 'Built spandsp'
 
 
 # ---------------------------- libks ---------------------------- #
+
 git clone https://github.com/signalwire/libks.git  /opt/freeswitch/libs/libks
 
 echo 'Building libks...'
