@@ -37,6 +37,9 @@ git reset --hard 67d2455efe02e7ff0d897f3fd5636fed4d54549e
 dpkg-buildpackage -b
 dpkg -i ../libspandsp3_3*.deb # Enough to run FreeSWITCH
 dpkg -i ../libspandsp3-dev_*.deb # Required to build FreeSWITCH, no need to ship
+
+cp ../libspandsp3_3*.deb /opt/freeswitch/debs/
+
 echo 'Built spandsp'
 
 
@@ -47,6 +50,7 @@ echo 'Building libks...'
 cd /opt/freeswitch/libs/libks/
 PACKAGE_RELEASE="42" cmake . -DCMAKE_BUILD_TYPE=Release && make package
 dpkg -i libks2_2*.deb
+cp libks2_2*.deb /opt/freeswitch/debs/
 echo 'Built libks'
 
 
@@ -131,7 +135,6 @@ EOT
 
 dpkg-deb --build /tmp/freeswitch
 dpkg-name -o /tmp/freeswitch.deb
-cp /tmp/freeswitch_1.10.11.2_amd64.deb /opt/freeswitch/libs/debs/
 dpkg -i /tmp/freeswitch_1.10.11.2_amd64.deb
 cp /tmp/freeswitch_*.deb /opt/freeswitch/debs
 
