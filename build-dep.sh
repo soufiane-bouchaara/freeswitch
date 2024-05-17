@@ -78,15 +78,9 @@ cd freeswitch-1.10.11.-release
 ./configure --prefix=/usr/local/freeswitch --disable-libvpx
 
 # Remove specific modules from building
-REMOVED_MODULES=(
-    mod_signalwire
-    mod_pgsql
-    mod_av
-)
-for module in "${REMOVED_MODULES[@]}"
-do
-    sed -i "s/applications\/$module/#applications\/$module/g" build/modules.conf.in
-done
+sed -i '/mod_signalwire/s/^/# /' build/modules.conf.in
+sed -i '/mod_pgsql/s/^/# /' build/modules.conf.in
+sed -i '/mod_av/s/^/# /' build/modules.conf.in
 
 
 make
