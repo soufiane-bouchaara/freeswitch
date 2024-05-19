@@ -62,7 +62,9 @@ git clone https://github.com/signalwire/signalwire-c /opt/freeswitch/libs/signal
 
 cd /opt/freeswitch/libs/signalwire-c/
 PACKAGE_RELEASE="42" cmake . -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX:PATH=/usr/local/freeswitch && make package
-PKG_CONFIG_PATH=usr/local/freeswitch/lib/pkgconfig PACKAGE_RELEASE="42" cmake . -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX:PATH=/usr/local/freeswitch && make package
+PKG_CONFIG_PATH=usr/local/freeswitch/lib/pkgconfig PACKAGE_RELEASE="42" cmake . -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX:PATH=/usr/local/freeswitch 
+make package
+
 
 dpkg -i signalwire-client-*.deb
 cp signalwire-client-*.deb ../../debs
@@ -79,12 +81,82 @@ tar -zxvf freeswitch-1.10.11.-release.tar.gz
 cd freeswitch-1.10.11.-release
 ./configure --prefix=/usr/local/freeswitch --disable-libvpx
 
-# Remove specific modules from building
-sed -i '/mod_signalwire/s/^/# /' build/modules.conf.in
-sed -i '/mod_pgsql/s/^/# /' build/modules.conf.in
-sed -i '/mod_av/s/^/# /' build/modules.conf.in
+cat <<EOT > /opt/freeswitch/modules.conf
+applications/mod_abstraction
+applications/mod_bert
+applications/mod_blacklist
+applications/mod_callcenter
+applications/mod_cidlookup
+applications/mod_cluechoo
+applications/mod_commands
+applications/mod_conference
+applications/mod_curl
+applications/mod_db
+applications/mod_directory
+applications/mod_distributor
+applications/mod_dptools
+applications/mod_easyroute
+applications/mod_enum
+applications/mod_esf
+applications/mod_esl
+applications/mod_expr
+applications/mod_fifo
+applications/mod_fsk
+applications/mod_fsv
+applications/mod_hash
+applications/mod_httapi
+applications/mod_http_cache
+applications/mod_lcr
+applications/mod_sms
+applications/mod_snom
+applications/mod_sonar
+applications/mod_spandsp
+applications/mod_spy
+applications/mod_stress
+applications/mod_valet_parking
+applications/mod_voicemail
+applications/mod_voicemail_ivr
+codecs/mod_amr
+codecs/mod_b64
+codecs/mod_g723_1
+codecs/mod_g729
+codecs/mod_h26x
+codecs/mod_opus
+codecs/mod_vpx
+dialplans/mod_dialplan_asterisk
+dialplans/mod_dialplan_xml
+endpoints/mod_loopback
+endpoints/mod_portaudio
+endpoints/mod_rtc
+endpoints/mod_rtmp
+endpoints/mod_skinny
+endpoints/mod_sofia
+endpoints/mod_verto
+event_handlers/mod_cdr_csv
+event_handlers/mod_cdr_sqlite
+event_handlers/mod_event_socket
+event_handlers/mod_format_cdr
+event_handlers/mod_json_cdr
+formats/mod_local_stream
+formats/mod_native_file
+formats/mod_png
+formats/mod_portaudio_stream
+formats/mod_shout
+formats/mod_sndfile
+formats/mod_tone_stream
+loggers/mod_console
+loggers/mod_logfile
+loggers/mod_syslog
+say/mod_say_en
+xml_int/mod_xml_cdr
+xml_int/mod_xml_curl
+xml_int/mod_xml_rpc
+xml_int/mod_xml_scgi
+databases/mod_pgsql
+languages/mod_lua
+EOT
 
-cat build/modules.conf.in
+
 make
 make install
 
