@@ -74,11 +74,12 @@ ldconfig
 # -------------------------- FreeSWITCH -------------------------- #
 
 echo 'Building FreeSWITCH...'
-wget -c https://files.freeswitch.org/releases/freeswitch/freeswitch-1.10.11.-release.tar.gz -P /opt/freeswitch
-
+#wget -c https://files.freeswitch.org/releases/freeswitch/freeswitch-1.10.11.-release.tar.gz -P /opt/freeswitch
+git clone https://github.com/signalwire/freeswitch.git /opt/freeswitch
 cd /opt/freeswitch/
-tar -zxvf freeswitch-1.10.11.-release.tar.gz
-cd freeswitch-1.10.11.-release
+#tar -zxvf freeswitch-1.10.11.-release.tar.gz
+#cd freeswitch-1.10.11.-release
+./bootstrap.sh -j
 ./configure --prefix=/usr/local/freeswitch --disable-libvpx
 
 cat <<EOT > /opt/freeswitch/modules.conf
