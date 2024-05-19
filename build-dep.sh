@@ -14,6 +14,7 @@ apt-get install -y \
 
 
 # --------------------------- sofia-sip --------------------------- #
+git clone https://github.com/signalwire/freeswitch.git /opt/freeswitch
 
 mkdir -p /opt/freeswitch/libs
 mkdir -p /opt/freeswitch/debs
@@ -75,7 +76,6 @@ ldconfig
 
 echo 'Building FreeSWITCH...'
 #wget -c https://files.freeswitch.org/releases/freeswitch/freeswitch-1.10.11.-release.tar.gz -P /opt/freeswitch
-git clone https://github.com/signalwire/freeswitch.git /opt/freeswitch
 cd /opt/freeswitch/
 #tar -zxvf freeswitch-1.10.11.-release.tar.gz
 #cd freeswitch-1.10.11.-release
