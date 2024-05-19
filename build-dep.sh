@@ -191,7 +191,7 @@ chmod +x /tmp/freeswitch/DEBIAN/postinst
 
 #env var for freeswitch
 touch /tmp/freeswitch/usr/local/freeswitch/freeswitch
-mkdir -p  /tmp/freeswitch/etc/systemd/system/freeswitch.service
+mkdir -p  /tmp/freeswitch/etc/systemd/system/
 
 cat <<EOT > /tmp/freeswitch/etc/systemd/system/freeswitch.service
 [Unit] 
