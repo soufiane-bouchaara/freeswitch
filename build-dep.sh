@@ -62,6 +62,7 @@ git clone https://github.com/signalwire/signalwire-c /opt/freeswitch/libs/signal
 
 cd /opt/freeswitch/libs/signalwire-c/
 PACKAGE_RELEASE="42" cmake . -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX:PATH=/usr/local/freeswitch && make package
+PKG_CONFIG_PATH=usr/local/freeswitch/lib/pkgconfig PACKAGE_RELEASE="42" cmake . -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX:PATH=/usr/local/freeswitch && make package
 
 dpkg -i signalwire-client-*.deb
 cp signalwire-client-*.deb ../../debs
@@ -83,7 +84,7 @@ sed -i '/mod_signalwire/s/^/# /' build/modules.conf.in
 sed -i '/mod_pgsql/s/^/# /' build/modules.conf.in
 sed -i '/mod_av/s/^/# /' build/modules.conf.in
 
-
+cat build/modules.conf.in
 make
 make install
 
