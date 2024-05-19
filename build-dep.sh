@@ -218,7 +218,7 @@ EOT
 
 dpkg-deb --build /tmp/freeswitch
 dpkg-name -o /tmp/freeswitch.deb
-dpkg -i /tmp/freeswitch_1.10.11.2_amd64.deb
+#dpkg -i /tmp/freeswitch_1.10.11.2_amd64.deb
 cp /tmp/freeswitch_*.deb /opt/freeswitch/debs
 
 echo 'Built FreeSWITCH!!'
