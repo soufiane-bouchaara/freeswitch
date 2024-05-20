@@ -26,6 +26,9 @@ cd /opt/freeswitch/libs/sofia-sip/
 dpkg-buildpackage
 dpkg -i ../libsofia-sip-ua0_*.deb # Enough to run FreeSWITCH
 dpkg -i ../libsofia-sip-ua-*.deb # Required to build FreeSWITCH, no need to ship
+
+cp ../libsofia-*.deb /opt/freeswitch/debs/
+
 echo 'Built sofia-sip'
 
 
