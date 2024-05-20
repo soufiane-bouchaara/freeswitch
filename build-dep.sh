@@ -226,12 +226,14 @@ echo 'Built FreeSWITCH!!'
 
 
 ###REPO
-mkdir -p /var/repo/dists/jammy/main/binary-amd64
+mkdir -p /var/repo/dists/stable/main/binary-amd64
 mkdir -p /var/repo/pool/main 
 cp /opt/freeswitch/debs/*.deb /var/repo/pool/main/
 
-apt-ftparchive packages /var/repo/pool/main > /var/repo/dists/jammy/main/binary-amd64/Packages
-gzip -k /var/repo/dists/jammy/main/binary-amd64/Packages
+
+
+apt-ftparchive packages /var/repo/pool/main > /var/repo/dists/stable/main/binary-amd64/Packages
+gzip -k /var/repo/dists/stable/main/binary-amd64/Packages
 aws s3 sync /var/repo s3://soufiane-test/repo --region eu-west-3
 
 
