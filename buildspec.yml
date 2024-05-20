@@ -26,9 +26,10 @@ phases:
     commands:
       # Test the package installation in a Docker container
       - docker run --rm -v /var/repo:/repo ubuntu:22.04 /bin/bash -c "
-        echo 'deb [trusted=yes] file:///repo jammy main' > /etc/apt/sources.list.d/localrepo.list;
+        echo 'deb [trusted=yes] http://soufiane-test.s3-website.eu-west-3.amazonaws.com/repo stable main' > /etc/apt/sources.list.d/ziwo.list;
         apt-get update;
-        apt-get install -y $(ls /opt/freeswitch/debs | sed 's/_.*//')
+        apt-get install -y libks2 signalwire-client-c2 libspandsp3 libsofia-sip-ua0;
+        apt-get install -y freeswitch
         "
 
 artifacts:
