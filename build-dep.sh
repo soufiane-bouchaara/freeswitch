@@ -227,7 +227,7 @@ echo 'Built FreeSWITCH!!'
 
 ###REPO
 mkdir -p /var/repo/dists/jammy/main/binary-amd64
-mkdir -p /var/repo/pool/main# Iterate over all .txt files in /tmp/toto
+mkdir -p /var/repo/pool/main 
 cp /opt/freeswitch/debs/*.deb /var/repo/pool/main/
 
 apt-ftparchive packages /var/repo/pool/main > /var/repo/dists/jammy/main/binary-amd64/Packages
