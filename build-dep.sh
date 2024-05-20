@@ -180,7 +180,7 @@ Version: 1.10.11.2
 Architecture: amd64
 Description: Ziwo FreeSWITCH
 Maintainer: Ziwo Infrastructure <infra@ziwo.io>
-Depends: libsqlite3-0, libcurl4, libspeexdsp1, libedit2, libpq5, libldns3, liblua5.2-0, libopus0, libshout3, libsndfile1, libmpg123-0, libsofia-sip-ua0 (= 1.13.17-0), libspandsp3 (= 3.0.0-42), libks2 (= 2.0.5-42~jammy), signalwire-client-c2 (= 2.0.1-42~jammy)
+Depends: libsqlite3-0, libcurl4, libspeexdsp1, libedit2, libpq5, libldns3, liblua5.2-0, libopus0, libshout3, libsndfile1, libmpg123-0, libsofia-sip-ua0, libspandsp3, libks2, signalwire-client-c2
 EOT
 
 cat <<EOT > /tmp/freeswitch/DEBIAN/postinst
