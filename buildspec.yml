@@ -23,21 +23,20 @@ phases:
   post_build:
     commands:
       # Sync repository structure with new deb packages
-      - mkdir -p $REPO_DIR/dists/$DIST/$COMPONENT/binary-amd64
-      - cd $DEB_DIR
+      - mkdir -p /var/repo/dists/jammy/main/binary-amd64
+      - cd  /var/repo/
       # Generate Packages.gz
-      - cd $REPO_DIR
-      - apt-ftparchive packages pool/$COMPONENT > dists/$DIST/$COMPONENT/binary-amd64/Packages
-      - gzip -k dists/$DIST/$COMPONENT/binary-amd64/Packages
+      - apt-ftparchive packages pool/main > dists/jammy/main/binary-amd64/Packages
+      - gzip -k dists/jammy/main/binary-amd64/Packages
 
       # Sync the repository with S3
-      - s3cmd sync $REPO_DIR s3://$S3_BUCKET/repo --acl-public
+      - s3cmd sync /var/repo s3://soufiane-test/repo --acl-public
 
       # Test the package installation in a Docker container
-      - docker run --rm -v $REPO_DIR:/repo ubuntu:22.04 /bin/bash -c "
+      - docker run --rm -v /var/repo:/repo ubuntu:22.04 /bin/bash -c "
         echo 'deb [trusted=yes] file:///repo jammy main' > /etc/apt/sources.list.d/localrepo.list;
         apt-get update;
-        apt-get install -y $(ls $DEB_DIR | sed 's/_.*//')
+        apt-get install -y $(ls /opt/freeswitch/debs | sed 's/_.*//')
         "
 
 artifacts:
