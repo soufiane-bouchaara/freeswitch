@@ -24,9 +24,9 @@ phases:
     commands:
       # Sync repository structure with new deb packages
       - mkdir -p /var/repo/dists/jammy/main/binary-amd64
-      - cd  /var/repo/
+      - mkdir -p /var/repo/pool/main
       # Generate Packages.gz
-      - apt-ftparchive packages pool/main > /var/repo/dists/jammy/main/binary-amd64/Packages
+      - apt-ftparchive packages /var/repo/pool/main > /var/repo/dists/jammy/main/binary-amd64/Packages
       - gzip -k /var/repo/dists/jammy/main/binary-amd64/Packages
 
       # Sync the repository with S3
