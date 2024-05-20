@@ -24,16 +24,6 @@ phases:
 
   post_build:
     commands:
-      # Sync repository structure with new deb packages
-      - mkdir -p /var/repo/dists/jammy/main/binary-amd64
-      - mkdir -p /var/repo/pool/main
-      # Generate Packages.gz
-      - apt-ftparchive packages /var/repo/pool/main > /var/repo/dists/jammy/main/binary-amd64/Packages
-      - gzip -k /var/repo/dists/jammy/main/binary-amd64/Packages
-
-      # Sync the repository with S3
-      - aws s3 sync /var/repo s3://soufiane-test/repo --region eu-west-3
-
       # Test the package installation in a Docker container
       - docker run --rm -v /var/repo:/repo ubuntu:22.04 /bin/bash -c "
         echo 'deb [trusted=yes] file:///repo jammy main' > /etc/apt/sources.list.d/localrepo.list;
