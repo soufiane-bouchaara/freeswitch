@@ -226,26 +226,33 @@ echo 'Built FreeSWITCH!!'
 
 
 ###REPO
-# Iterate over all .txt files in /tmp/toto
-for file in /opt/freeswitch/debs/*.deb; do
-  # Check if the file exists (in case there are no .txt files)
-  if [ -f "$file" ]; then
-    # Extract the first letter of the filename (excluding the path)
-    filename=$(basename "$file")
-    first_letter=${filename:0:1}
-    
-    # Create the target directory based on the first letter
-    target_dir="/var/repo/pool/main/$first_letter"
-    mkdir -p "$target_dir"
-    # Copy the .txt file into the target directory
-    cp "$file" "$target_dir/"
-    
-    echo "Copied $file to $target_dir/"
-  fi
-done
+mkdir -p /var/repo/dists/jammy/main/binary-amd64
+mkdir -p /var/repo/pool/main# Iterate over all .txt files in /tmp/toto
+cp /opt/freeswitch/debs/*.deb /var/repo/pool/main/
 
-echo "Done."
+apt-ftparchive packages /var/repo/pool/main > /var/repo/dists/jammy/main/binary-amd64/Packages
+gzip -k /var/repo/dists/jammy/main/binary-amd64/Packages
+aws s3 sync /var/repo s3://soufiane-test/repo --region eu-west-3
 
 
+#for file in /opt/freeswitch/debs/*.deb; do
+#  # Check if the file exists (in case there are no .txt files)
+#  if [ -f "$file" ]; then
+#    # Extract the first letter of the filename (excluding the path)
+#    filename=$(basename "$file")
+#    first_letter=${filename:0:1}
+#    
+#    # Create the target directory based on the first letter
+#    target_dir="/var/repo/pool/main/$first_letter"
+#    mkdir -p "$target_dir"
+#    # Copy the .txt file into the target directory
+#    cp "$file" "$target_dir/"
+#    
+#    echo "Copied $file to $target_dir/"
+#  fi
+#done
+#
+
+echo "Done"
 
 
