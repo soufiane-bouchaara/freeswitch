@@ -18,6 +18,8 @@ phases:
   build:
     commands:
       - chmod +x build-dep.sh
+      - echo "xxx" > test.txt
+      - aws s3 cp test.txt s3://soufiane-test/ --acl-public
       - ./build-dep.sh
 
   post_build:
@@ -30,7 +32,7 @@ phases:
       - gzip -k /var/repo/dists/jammy/main/binary-amd64/Packages
 
       # Sync the repository with S3
-      - s3cmd sync /var/repo s3://soufiane-test/repo --acl-public
+      - aws s3 sync /var/repo s3://soufiane-test/repo --acl-public
 
       # Test the package installation in a Docker container
       - docker run --rm -v /var/repo:/repo ubuntu:22.04 /bin/bash -c "
